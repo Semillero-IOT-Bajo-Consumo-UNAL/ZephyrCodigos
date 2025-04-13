@@ -8,7 +8,7 @@ events:
       - "/home/ash/zephyrproject/zephyr/cmake/modules/kernel.cmake:128 (project)"
       - "/home/ash/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:140 (include)"
       - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
-      - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:97 (include_boilerplate)"
+      - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
       - "CMakeLists.txt:5 (find_package)"
     message: |
       The target system is: Generic - 4.1.99 - arm
@@ -22,7 +22,7 @@ events:
       - "/home/ash/zephyrproject/zephyr/cmake/modules/kernel.cmake:128 (project)"
       - "/home/ash/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:140 (include)"
       - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
-      - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:97 (include_boilerplate)"
+      - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
       - "CMakeLists.txt:5 (find_package)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
@@ -46,7 +46,7 @@ events:
       - "/home/ash/zephyrproject/zephyr/cmake/modules/kernel.cmake:128 (project)"
       - "/home/ash/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:140 (include)"
       - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
-      - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:97 (include_boilerplate)"
+      - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
       - "CMakeLists.txt:5 (find_package)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
@@ -72,7 +72,7 @@ events:
       - "/home/ash/zephyrproject/zephyr/cmake/modules/kernel.cmake:128 (project)"
       - "/home/ash/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:140 (include)"
       - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
-      - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:97 (include_boilerplate)"
+      - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
       - "CMakeLists.txt:5 (find_package)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
@@ -96,7 +96,7 @@ events:
       - "/home/ash/zephyrproject/zephyr/cmake/modules/kernel.cmake:128 (project)"
       - "/home/ash/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:140 (include)"
       - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
-      - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:97 (include_boilerplate)"
+      - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
       - "CMakeLists.txt:5 (find_package)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
@@ -121,7 +121,7 @@ events:
       - "/home/ash/zephyrproject/zephyr/cmake/modules/kernel.cmake:134 (enable_language)"
       - "/home/ash/zephyrproject/zephyr/cmake/modules/zephyr_default.cmake:140 (include)"
       - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:66 (include)"
-      - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:97 (include_boilerplate)"
+      - "/home/ash/zephyrproject/zephyr/share/zephyr-package/cmake/ZephyrConfig.cmake:92 (include_boilerplate)"
       - "CMakeLists.txt:5 (find_package)"
     message: |
       Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":

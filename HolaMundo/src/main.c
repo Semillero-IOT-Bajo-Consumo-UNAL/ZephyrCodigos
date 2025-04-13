@@ -1,6 +1,4 @@
 #include <zephyr/kernel.h>
-#include <zephyr/device.h>
-#include <zephyr/devicetree.h>
 
 /* Definimos la constante SLEEP_TIME_MS como 1000 representando 1000 milisegundos  */
 #define SLEEP_TIME_MS   1000

@@ -1,4 +1,4 @@
 west:
-  command: /home/ash/zephyrproject/.venv/bin/west build -p always -- -DCC1352_FLASHER=/home/ash/zephyrproject/.venv/bin/cc1352_flasher
+  command: /home/ash/zephyrproject/.venv/bin/west build -b beagleconnect_freedom --pristine
   topdir: /home/ash/zephyrproject
   version: 1.3.0

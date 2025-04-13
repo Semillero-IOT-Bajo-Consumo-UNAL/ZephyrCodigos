@@ -614,8 +614,6 @@ _Python3_EXECUTABLE:INTERNAL=/home/ash/zephyrproject/.venv/bin/python3
 //Python3 Properties
 _Python3_INTERPRETER_PROPERTIES:INTERNAL=Python;3;12;3;64;<none>;cpython-312-x86_64-linux-gnu.so;abi3;/usr/lib/python3.12;/home/ash/zephyrproject/.venv/lib/python3.12;/home/ash/zephyrproject/.venv/lib/python3.12/site-packages;/home/ash/zephyrproject/.venv/lib/python3.12/site-packages
 _Python3_INTERPRETER_SIGNATURE:INTERNAL=b5a7012d838dcd8ffbe60f140aeff79b
-//Interpreter reason failure
-_Python3_Interpreter_REASON_FAILURE:INTERNAL=
 //NumPy reason failure
 _Python3_NumPy_REASON_FAILURE:INTERNAL=
 
