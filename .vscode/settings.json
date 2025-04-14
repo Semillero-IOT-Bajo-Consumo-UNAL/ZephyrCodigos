@@ -1,0 +1,5 @@
+{
+    "terminal.integrated.defaultProfile.linux": "Zephyr IDE Terminal",
+    "zephyr-ide.use-zephyr-ide-json": true,
+    "zephyr-ide.projects": null
+}
