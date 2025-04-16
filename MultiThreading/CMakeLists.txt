@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.20.0)
 find_package(Zephyr REQUIRED)
 
 # Le ponemos nombre a nuestro proyecto ( puramente para informacion )
-project(mi_proyectico_zephyr)
+project(Threading)
 
 # si vamos a incluir mas librerias descomentamos e indicamos la carpeta de los .h
 # target_include_directories(app PRIVATE libreria/carpeta/include/)
