@@ -27,7 +27,8 @@ static void recv_cb(struct net_if *iface, struct net_pkt *pkt)
 static void send_packet(struct net_if *iface, const char *msg)
 {
     size_t len = strlen(msg);
-
+    net_pkt_set_ll_reserve(pkt, NET_LL_RESERVE);  // importante si haces set_lladdr
+    net_pkt_set_lladdr_dst(pkt, NET_LINK_ADDR_BROADCAST, sizeof(NET_LINK_ADDR_BROADCAST));
     struct net_pkt *pkt = net_pkt_alloc_with_buffer(iface, len, AF_UNSPEC, 0, K_NO_WAIT);
     if (!pkt) {
         LOG_ERR("❌ No se pudo alocar el paquete");
