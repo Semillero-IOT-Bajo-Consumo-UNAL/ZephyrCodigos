@@ -39,107 +39,107 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/canbus/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/canbus/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/debug/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/debug/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/fb/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/fb/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/fs/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/fs/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/ipc/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/ipc/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/logging/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/logging/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/mem_mgmt/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/mem_mgmt/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/mgmt/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/mgmt/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/modbus/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/modbus/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/pm/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/pm/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/portability/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/portability/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/random/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/random/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/rtio/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/rtio/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/sd/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/sd/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/stats/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/stats/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/storage/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/storage/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/task_wdt/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/task_wdt/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/testsuite/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/testsuite/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/tracing/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/tracing/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/usb/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/usb/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/subsys/install_local_manifest.txt"
+  file(WRITE "/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/subsys/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

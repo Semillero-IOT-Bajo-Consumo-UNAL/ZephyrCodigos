@@ -40,6 +40,6 @@ endif()
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/modules/quicklogic/install_local_manifest.txt"
+  file(WRITE "/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/modules/quicklogic/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

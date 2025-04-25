@@ -39,12 +39,12 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/modules/atmel/asf/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/modules/atmel/asf/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/modules/atmel/install_local_manifest.txt"
+  file(WRITE "/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/modules/atmel/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

@@ -39,67 +39,67 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/disk/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/disk/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/firmware/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/firmware/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/interrupt_controller/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/interrupt_controller/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/misc/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/misc/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/pcie/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/pcie/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/usb/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/usb/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/usb_c/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/usb_c/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/console/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/console/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/gpio/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/gpio/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/pinctrl/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/pinctrl/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/serial/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/serial/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/timer/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/timer/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/drivers/install_local_manifest.txt"
+  file(WRITE "/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/drivers/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

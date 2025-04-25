@@ -39,17 +39,17 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/boards/beagle/beagleconnect_freedom/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/boards/beagle/beagleconnect_freedom/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/boards/shields/cmake_install.cmake")
+  include("/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/boards/shields/cmake_install.cmake")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/zephyr/boards/install_local_manifest.txt"
+  file(WRITE "/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/zephyr/boards/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

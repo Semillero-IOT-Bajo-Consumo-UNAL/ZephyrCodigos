@@ -1,7 +1,7 @@
 cmake:
   application:
-    configuration-dir: '/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo'
-    source-dir: '/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo'
+    configuration-dir: '/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo'
+    source-dir: '/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo'
   board:
     name: 'beagleconnect_freedom'
     path:
@@ -38,9 +38,9 @@ cmake:
   kconfig:
     files:
      - '/home/ash/zephyrproject/zephyr/boards/beagle/beagleconnect_freedom/beagleconnect_freedom_defconfig'
-     - '/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/prj.conf'
+     - '/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/prj.conf'
     user-files:
-     - '/home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/prj.conf'
+     - '/home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/prj.conf'
   toolchain:
     name: 'zephyr'
     path: '/home/ash/zephyr-sdk-0.17.0'
@@ -49,6 +49,6 @@ cmake:
     zephyr-base: '/home/ash/zephyrproject/zephyr'
 version: '0.1.0'
 west:
-  command: '/home/ash/zephyrproject/.venv/bin/west build -b beagleconnect_freedom --pristine'
+  command: '/home/ash/zephyrproject/.venv/bin/west build -b beagleconnect_freedom'
   topdir: '/home/ash/zephyrproject'
   version: '1.3.0'

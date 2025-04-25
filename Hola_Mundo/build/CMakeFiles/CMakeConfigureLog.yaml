@@ -61,7 +61,7 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
       
       The C compiler identification is GNU, found in:
-        /home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/CMakeFiles/4.0.0/CompilerIdC/CMakeCCompilerId.o
+        /home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/CMakeFiles/4.0.0/CompilerIdC/CMakeCCompilerId.o
       
   -
     kind: "message-v1"
@@ -111,7 +111,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.o"
       
       The CXX compiler identification is GNU, found in:
-        /home/ash/zephyrproject/zephyr/TutorialZephyr/HolaMundo/build/CMakeFiles/4.0.0/CompilerIdCXX/CMakeCXXCompilerId.o
+        /home/ash/zephyrproject/zephyr/TutorialZephyr/Hola_Mundo/build/CMakeFiles/4.0.0/CompilerIdCXX/CMakeCXXCompilerId.o
       
   -
     kind: "message-v1"
