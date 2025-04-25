@@ -204,6 +204,7 @@ ztest :
  ASSERT (SIZEOF(init_array) == 0,
   "GNU-style constructors required but STATIC_INIT_GNU not enabled")
  net_l3_register_area : SUBALIGN(4) { _net_l3_register_list_start = .; KEEP(*(SORT_BY_NAME(._net_l3_register.static.*))); _net_l3_register_list_end = .; } > FLASH
+ net_socket_register_area : SUBALIGN(4) { _net_socket_register_list_start = .; KEEP(*(SORT_BY_NAME(._net_socket_register.static.*))); _net_socket_register_list_end = .; } > FLASH
  net_mgmt_event_static_handler_area : SUBALIGN(4) { _net_mgmt_event_static_handler_list_start = .; KEEP(*(SORT_BY_NAME(._net_mgmt_event_static_handler.static.*))); _net_mgmt_event_static_handler_list_end = .; } > FLASH
  bt_l2cap_fixed_chan_area : SUBALIGN(4) { _bt_l2cap_fixed_chan_list_start = .; KEEP(*(SORT_BY_NAME(._bt_l2cap_fixed_chan.static.*))); _bt_l2cap_fixed_chan_list_end = .; } > FLASH
  bt_gatt_service_static_area : SUBALIGN(4) { _bt_gatt_service_static_list_start = .; KEEP(*(SORT_BY_NAME(._bt_gatt_service_static.static.*))); _bt_gatt_service_static_list_end = .; } > FLASH

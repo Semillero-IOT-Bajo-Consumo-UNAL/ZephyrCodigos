@@ -82,6 +82,9 @@
 /home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/lib/net_buf/CMakeFiles/rebuild_cache.dir
 /home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/lib/os/CMakeFiles/edit_cache.dir
 /home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/lib/os/CMakeFiles/rebuild_cache.dir
+/home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/lib/os/zvfs/CMakeFiles/lib__os__zvfs.dir
+/home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/lib/os/zvfs/CMakeFiles/edit_cache.dir
+/home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/lib/os/zvfs/CMakeFiles/rebuild_cache.dir
 /home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/lib/utils/CMakeFiles/edit_cache.dir
 /home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/lib/utils/CMakeFiles/rebuild_cache.dir
 /home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/soc/CMakeFiles/edit_cache.dir
@@ -165,6 +168,8 @@
 /home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/subsys/net/lib/CMakeFiles/rebuild_cache.dir
 /home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/subsys/net/lib/utils/CMakeFiles/edit_cache.dir
 /home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/subsys/net/lib/utils/CMakeFiles/rebuild_cache.dir
+/home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/subsys/net/lib/sockets/CMakeFiles/edit_cache.dir
+/home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/subsys/net/lib/sockets/CMakeFiles/rebuild_cache.dir
 /home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/subsys/shell/CMakeFiles/edit_cache.dir
 /home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/subsys/shell/CMakeFiles/rebuild_cache.dir
 /home/ash/zephyrproject/zephyr/TutorialZephyr/Comunicaciones/IEEE_802.15.4_Chat/build/zephyr/subsys/shell/modules/CMakeFiles/edit_cache.dir

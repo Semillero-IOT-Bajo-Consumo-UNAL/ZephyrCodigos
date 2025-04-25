@@ -49,6 +49,22 @@
     ],
     [
         [
+            "int zvfs_poll",
+            "struct zvfs_pollfd *fds, int nfds, int poll_timeout"
+        ],
+        "fdtable.h",
+        true
+    ],
+    [
+        [
+            "int zvfs_select",
+            "int nfds, struct zvfs_fd_set *ZRESTRICT readfds,\n\t\t\t  struct zvfs_fd_set *ZRESTRICT writefds,\n\t\t\t  struct zvfs_fd_set *ZRESTRICT errorfds,\n\t\t\t  const struct timespec *ZRESTRICT timeout, const void *ZRESTRICT sigmask"
+        ],
+        "fdtable.h",
+        true
+    ],
+    [
+        [
             "void z_log_msg_simple_create_0",
             "const void *source, uint32_t level,\n\t\t\t\t\t const char *fmt"
         ],
@@ -229,6 +245,182 @@
             "sa_family_t family, const void *src,\n\t\t\t      char *dst, size_t size"
         ],
         "net_ip.h",
+        true
+    ],
+    [
+        [
+            "void *zsock_get_context_object",
+            "int sock"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_socket",
+            "int family, int type, int proto"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_socketpair",
+            "int family, int type, int proto, int *sv"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_close",
+            "int sock"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_shutdown",
+            "int sock, int how"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_bind",
+            "int sock, const struct sockaddr *addr,\n\t\t\t socklen_t addrlen"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_connect",
+            "int sock, const struct sockaddr *addr,\n\t\t\t    socklen_t addrlen"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_listen",
+            "int sock, int backlog"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_accept",
+            "int sock, struct sockaddr *addr, socklen_t *addrlen"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "ssize_t zsock_sendto",
+            "int sock, const void *buf, size_t len,\n\t\t\t       int flags, const struct sockaddr *dest_addr,\n\t\t\t       socklen_t addrlen"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "ssize_t zsock_sendmsg",
+            "int sock, const struct msghdr *msg,\n\t\t\t\tint flags"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "ssize_t zsock_recvfrom",
+            "int sock, void *buf, size_t max_len,\n\t\t\t\t int flags, struct sockaddr *src_addr,\n\t\t\t\t socklen_t *addrlen"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "ssize_t zsock_recvmsg",
+            "int sock, struct msghdr *msg, int flags"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_fcntl_impl",
+            "int sock, int cmd, int flags"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_ioctl_impl",
+            "int sock, unsigned long request, va_list ap"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_getsockopt",
+            "int sock, int level, int optname,\n\t\t\t       void *optval, socklen_t *optlen"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_setsockopt",
+            "int sock, int level, int optname,\n\t\t\t       const void *optval, socklen_t optlen"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_getpeername",
+            "int sock, struct sockaddr *addr,\n\t\t\t\tsocklen_t *addrlen"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_getsockname",
+            "int sock, struct sockaddr *addr,\n\t\t\t\tsocklen_t *addrlen"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_gethostname",
+            "char *buf, size_t len"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int zsock_inet_pton",
+            "sa_family_t family, const char *src, void *dst"
+        ],
+        "socket.h",
+        true
+    ],
+    [
+        [
+            "int z_zsock_getaddrinfo_internal",
+            "const char *host,\n\t\t\t\t\t   const char *service,\n\t\t\t\t\t   const struct zsock_addrinfo *hints,\n\t\t\t\t\t   struct zsock_addrinfo *res"
+        ],
+        "socket.h",
         true
     ],
     [
@@ -4249,182 +4441,6 @@
     ],
     [
         [
-            "void *zsock_get_context_object",
-            "int sock"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_socket",
-            "int family, int type, int proto"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_socketpair",
-            "int family, int type, int proto, int *sv"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_close",
-            "int sock"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_shutdown",
-            "int sock, int how"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_bind",
-            "int sock, const struct sockaddr *addr,\n\t\t\t socklen_t addrlen"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_connect",
-            "int sock, const struct sockaddr *addr,\n\t\t\t    socklen_t addrlen"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_listen",
-            "int sock, int backlog"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_accept",
-            "int sock, struct sockaddr *addr, socklen_t *addrlen"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "ssize_t zsock_sendto",
-            "int sock, const void *buf, size_t len,\n\t\t\t       int flags, const struct sockaddr *dest_addr,\n\t\t\t       socklen_t addrlen"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "ssize_t zsock_sendmsg",
-            "int sock, const struct msghdr *msg,\n\t\t\t\tint flags"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "ssize_t zsock_recvfrom",
-            "int sock, void *buf, size_t max_len,\n\t\t\t\t int flags, struct sockaddr *src_addr,\n\t\t\t\t socklen_t *addrlen"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "ssize_t zsock_recvmsg",
-            "int sock, struct msghdr *msg, int flags"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_fcntl_impl",
-            "int sock, int cmd, int flags"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_ioctl_impl",
-            "int sock, unsigned long request, va_list ap"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_getsockopt",
-            "int sock, int level, int optname,\n\t\t\t       void *optval, socklen_t *optlen"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_setsockopt",
-            "int sock, int level, int optname,\n\t\t\t       const void *optval, socklen_t optlen"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_getpeername",
-            "int sock, struct sockaddr *addr,\n\t\t\t\tsocklen_t *addrlen"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_getsockname",
-            "int sock, struct sockaddr *addr,\n\t\t\t\tsocklen_t *addrlen"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_gethostname",
-            "char *buf, size_t len"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int zsock_inet_pton",
-            "sa_family_t family, const char *src, void *dst"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
-            "int z_zsock_getaddrinfo_internal",
-            "const char *host,\n\t\t\t\t\t   const char *service,\n\t\t\t\t\t   const struct zsock_addrinfo *hints,\n\t\t\t\t\t   struct zsock_addrinfo *res"
-        ],
-        "socket.h",
-        false
-    ],
-    [
-        [
             "int net_socket_service_register",
             "const struct net_socket_service_desc *service,\n\t\t\t\t\t  struct zsock_pollfd *fds, int len, void *user_data"
         ],
@@ -4565,22 +4581,6 @@
             "void"
         ],
         "errno_private.h",
-        false
-    ],
-    [
-        [
-            "int zvfs_poll",
-            "struct zvfs_pollfd *fds, int nfds, int poll_timeout"
-        ],
-        "fdtable.h",
-        false
-    ],
-    [
-        [
-            "int zvfs_select",
-            "int nfds, struct zvfs_fd_set *ZRESTRICT readfds,\n\t\t\t  struct zvfs_fd_set *ZRESTRICT writefds,\n\t\t\t  struct zvfs_fd_set *ZRESTRICT errorfds,\n\t\t\t  const struct timespec *ZRESTRICT timeout, const void *ZRESTRICT sigmask"
-        ],
-        "fdtable.h",
         false
     ]
 ]
