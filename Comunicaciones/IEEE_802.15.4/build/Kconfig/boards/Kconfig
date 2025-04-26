@@ -1,2 +1,0 @@
-# Load Zephyr board Kconfig descriptions.
-osource "/home/ash/zephyrproject/zephyr/boards/beagle/beagleconnect_freedom/Kconfig"
