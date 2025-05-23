@@ -1,0 +1,34 @@
+/* beagleconnect_freedom.overlay */
+
+/ {
+    chosen {
+        zephyr,ieee802154     = &ieee802154;
+        zephyr,settings-partition = &settings_partition;
+    };
+};
+
+&radio {
+    status = "okay";
+
+    ieee802154 {
+        status = "okay";
+    };
+
+    ieee802154g {
+        status = "disabled";
+    };
+};
+
+&flash0 {
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells    = <1>;
+
+        /* 64 KiB for OpenThread settings: 0xA0000–0xB0000 */
+        settings_partition: partition@a0000 {
+            label = "storage";
+            reg   = <0x0A0000 0x010000>;
+        };
+    };
+};

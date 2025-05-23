@@ -11,4 +11,5 @@ project(IEEE)
 # target_include_directories(app PRIVATE libreria/carpeta/include/)
 
 # Indicamos los archivos de NUESTRO proyecto vamos a compilar
+FILE (GLOB app_sources src/*.c)
 target_sources(app PRIVATE src/main.c)
