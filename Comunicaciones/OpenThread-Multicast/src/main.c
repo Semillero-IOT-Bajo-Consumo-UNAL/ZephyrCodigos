@@ -9,22 +9,22 @@ static struct net_context *udp_context;
 Eventos
 */
 
-static void udp_receive(struct net_context *context, struct net_pkt *pkt, int status, void *user_data)
-{
+static void udp_receive(struct net_context *context, struct net_pkt *pkt,int status, void *user_data){
     ARG_UNUSED(context);
     ARG_UNUSED(user_data);
     ARG_UNUSED(status);
 
-    uint8_t buf[128];
-    ssize_t len = net_pkt_read(pkt, buf, sizeof(buf) - 1);
-    if (len < 0) {
-        printk("Error leyendo paquete UDP\n");
+    size_t len = net_pkt_remaining_data(pkt);
+    uint8_t buf[len + 1];
+
+    if (net_pkt_read(pkt, buf, len) < 0) {
+        printk("Failed to read UDP payload\n");
         net_pkt_unref(pkt);
         return;
     }
 
-    buf[len] = '\0';  // Termina string
-    printk("Mensaje recibido: %s\n", buf);
+    buf[len] = '\0'; // Null-terminate
+    printk("Received UDP message (len %zu): %s\n", len, buf);
 
     net_pkt_unref(pkt);
 }
