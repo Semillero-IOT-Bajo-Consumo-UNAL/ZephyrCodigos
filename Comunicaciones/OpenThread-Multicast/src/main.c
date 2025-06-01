@@ -3,6 +3,7 @@
 #include <zephyr/net/net_context.h>
 #include <zephyr/net/net_pkt.h>
 #include <zephyr/net/net_ip.h>
+#include <zephyr/shell/shell.h>
 static struct net_context *udp_context;
 /*
 Eventos
@@ -88,5 +89,5 @@ void main(void)
     net_context_recv(udp_context, udp_receive, K_NO_WAIT, NULL);
 
 
-    SHELL_CMD_REGISTER(comunicar, NULL, "Enciende un LED", enviarmsg);
 }
+SHELL_CMD_REGISTER(comunicar, NULL, "Enciende un LED", enviarmsg);
