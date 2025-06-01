@@ -54,7 +54,6 @@ int udp_send(const char *msg, const char *dest_ip, uint16_t dest_port)
                              NULL,         // callback
                              K_NO_WAIT,    // timeout
                              NULL);        // user_data
-
     if (ret < 0) {
         printk("UDP send failed: %d\n", ret);
     }
@@ -66,12 +65,30 @@ int udp_send(const char *msg, const char *dest_ip, uint16_t dest_port)
 Cuerpo principal
 */
 
-
-static int enviarmsg(const struct shell *shell, size_t argc, char **argv)
+static int comunicarf(const struct shell *shell, size_t argc, char **argv)
 {
-    udp_send("Hola desde Zephyr", "fe03::1", 12345); 
+    if (argc < 3) {
+        shell_print(shell, "Uso: comunicar <mensaje>");
+        return -EINVAL;
+    }
+
+    const char *msg = argv[2];
+    udp_send(msg, "ff03::1", 12345);
     return 0;
 }
+
+static int mensajef(const struct shell *shell, size_t argc, char **argv)
+{
+    if (argc < 3) {
+        shell_print(shell, "Uso: mensaje <ip> <mensaje>");
+        return -EINVAL;
+    }
+    const char *ip = argv[1];
+    const char *msg = argv[2];
+    udp_send(msg, ip, 12345);
+    return 0;
+}
+
 
 void main(void)
 {
@@ -90,4 +107,6 @@ void main(void)
 
 
 }
-SHELL_CMD_REGISTER(comunicar, NULL, "Enciende un LED", enviarmsg);
+SHELL_CMD_REGISTER(comunicar, NULL, "Envia un mesaje a toda la red (ej: comunicar hola_mundo)", comunicarf);
+SHELL_CMD_REGISTER(mensaje, NULL, "Envia un mesaje a una ip en especifico (con <ot ipaddr> puedes ver tu ip)", mensajef);
+
