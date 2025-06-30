@@ -1,0 +1,11 @@
+&pwm0 {
+    status = "okay";
+    pinctrl-0 = <&pwm0_default>;
+    pinctrl-names = "default";
+    label = "chicharron";
+    };
+    &i2c0 {
+    status = "okay";
+    clock-frequency = <100000>;
+    label = "i2c";
+};
