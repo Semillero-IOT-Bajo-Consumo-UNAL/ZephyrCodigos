@@ -1,0 +1,20 @@
+/* beagleconnect_freedom.overlay */
+
+/ {
+    chosen {
+        zephyr,ieee802154     = &ieee802154;
+    };
+};
+
+&radio {
+    status = "okay";
+
+    ieee802154 {
+        status = "disabled";
+    };
+
+    ieee802154g {
+        status = "okay";
+    };
+};
+
