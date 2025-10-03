@@ -5,17 +5,14 @@
 #include <zephyr/net/net_if.h>
 #include <zephyr/net/net_mgmt.h>
 #include <zephyr/net/ieee802154_mgmt.h>
+#include <zephyr/drivers/gpio.h>
+
 #define SERVER_PORT 12345         // Server listening port
 #define BUFFER_SIZE 128           // Buffer size for incoming messages
 #define RESPONSE_MESSAGE "Hello from server!"
 
 #define THREAD_STACK_SIZE 1024    // Stack size for threads
 #define THREAD_PRIORITY 5         // Priority for threads
-
-
-#ifndef NET_REQUEST_IEEE802154_SET_TX_POWER
-#define NET_REQUEST_IEEE802154_SET_TX_POWER 0x12345678
-#endif
 
 
 
@@ -26,6 +23,23 @@ static struct sockaddr_in6 client_addr; // Client address
 static socklen_t client_addr_len;
 static int server_sock;          // Server socket
 
+#define PA_PIN     29
+#define SUBG_PIN   30
+static const struct gpio_dt_spec pa_gpio = GPIO_DT_SPEC_GET_OR(DT_NODELABEL(antenna_mux0), gpios, {0});
+void enable_pa(const struct device *gpio)
+{
+    /* PA = DIO29 = 1, SUBG = DIO30 = 0 -> 20 dBm TX según tu tabla */
+    gpio_pin_set(gpio, PA_PIN, 1);
+    gpio_pin_set(gpio, SUBG_PIN, 0);
+}
+
+void disable_pa(const struct device *gpio)
+{
+    /* Volver al estado "off" */
+    gpio_pin_set(gpio, PA_PIN, 0);
+    gpio_pin_set(gpio, SUBG_PIN, 0);
+}
+
 // Thread stack and thread definitions
 K_THREAD_STACK_DEFINE(receive_stack, THREAD_STACK_SIZE);
 K_THREAD_STACK_DEFINE(transmit_stack, THREAD_STACK_SIZE);
@@ -35,26 +49,6 @@ struct k_thread transmit_thread_data;
 struct k_thread msg_data;
 
 
-static int try_set_tx_power_netmgmt(int8_t dbm)
-{
-    struct net_if *iface = net_if_get_default();
-    if (!iface) {
-        printk("No default net_if available\n");
-        return -ENODEV;
-    }
-
-    /* pasar también la longitud del buffer */
-    int ret = net_mgmt(NET_REQUEST_IEEE802154_SET_TX_POWER, iface,
-                       &dbm, sizeof(dbm));
-
-    if (ret == 0) {
-        printk("net_mgmt: TX power set to %d dBm\n", dbm);
-    } else {
-        printk("net_mgmt: set tx power failed: %d\n", ret);
-    }
-
-    return ret;
-}
 void receive_thread(void *arg1, void *arg2, void *arg3) {
     ssize_t received;
 
@@ -127,7 +121,13 @@ void main(void) {
     server_addr.sin6_port = htons(SERVER_PORT);
     server_addr.sin6_addr = in6addr_any;
 
-    try_set_tx_power_netmgmt(20);
+    if (!device_is_ready(pa_gpio.port)) {
+    printk("PA GPIO device not ready\n");
+    return;
+    }
+
+    gpio_pin_configure_dt(&pa_gpio, GPIO_OUTPUT_INACTIVE);
+    gpio_pin_set_dt(&pa_gpio, 1);
 
     // Bind the socket to the server address and port
     if (bind(server_sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {

@@ -7,7 +7,7 @@
 #include <zephyr/net/ieee802154_mgmt.h>
 #include <string.h>
 #include <errno.h>
-
+#include <zephyr/drivers/gpio.h>
 #define SERVER_PORT 12345        // Server port
 #define MESSAGE "Hello from Client!"
 #define SLEEP_TIME_MS 1000       // Time between sending messages (in milliseconds)
@@ -15,10 +15,6 @@
 
 #define THREAD_STACK_SIZE 1024   // Stack size for each thread
 #define THREAD_PRIORITY 5        // Priority for threads
-
-#ifndef NET_REQUEST_IEEE802154_SET_TX_POWER
-#define NET_REQUEST_IEEE802154_SET_TX_POWER 0x12345678
-#endif
 
 
 
@@ -35,25 +31,22 @@ K_THREAD_STACK_DEFINE(receive_stack, THREAD_STACK_SIZE);
 struct k_thread send_thread_data;
 struct k_thread receive_thread_data;
 
-static int try_set_tx_power_netmgmt(int8_t dbm)
+
+#define PA_PIN     29
+#define SUBG_PIN   30
+static const struct gpio_dt_spec pa_gpio = GPIO_DT_SPEC_GET_OR(DT_NODELABEL(antenna_mux0), gpios, {0});
+void enable_pa(const struct device *gpio)
 {
-    struct net_if *iface = net_if_get_default();
-    if (!iface) {
-        printk("No default net_if available\n");
-        return -ENODEV;
-    }
+    /* PA = DIO29 = 1, SUBG = DIO30 = 0 -> 20 dBm TX según tu tabla */
+    gpio_pin_set(gpio, PA_PIN, 1);
+    gpio_pin_set(gpio, SUBG_PIN, 0);
+}
 
-    /* pasar también la longitud del buffer */
-    int ret = net_mgmt(NET_REQUEST_IEEE802154_SET_TX_POWER, iface,
-                       &dbm, sizeof(dbm));
-
-    if (ret == 0) {
-        printk("net_mgmt: TX power set to %d dBm\n", dbm);
-    } else {
-        printk("net_mgmt: set tx power failed: %d\n", ret);
-    }
-
-    return ret;
+void disable_pa(const struct device *gpio)
+{
+    /* Volver al estado "off" */
+    gpio_pin_set(gpio, PA_PIN, 0);
+    gpio_pin_set(gpio, SUBG_PIN, 0);
 }
 
 
@@ -152,7 +145,15 @@ void main(void)
 
     /* espera corta para que la pila procese el 'if up' y net_config asigne dir. */
     k_sleep(K_MSEC(1500));
-    try_set_tx_power_netmgmt(20);
+    //try_set_tx_power_netmgmt(20);
+
+    if (!device_is_ready(pa_gpio.port)) {
+    printk("PA GPIO device not ready\n");
+    return;
+    }
+
+    gpio_pin_configure_dt(&pa_gpio, GPIO_OUTPUT_INACTIVE);
+    gpio_pin_set_dt(&pa_gpio, 1);
 
     // Initialize socket
     sock = initialize_socket(&server_addr);
