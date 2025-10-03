@@ -7,25 +7,22 @@
 #include <zephyr/net/ieee802154_mgmt.h>
 #include <string.h>
 #include <errno.h>
-#include <zephyr/drivers/gpio.h>
-#define SERVER_PORT 12345        // Server port
+#include <fcntl.h>
+
+#define SERVER_PORT 12345
 #define MESSAGE "Hello from Client!"
-#define SLEEP_TIME_MS 1000       // Time between sending messages (in milliseconds)
+#define SLEEP_TIME_MS 1000
 #define BUFFER_SIZE 128
 
-#define THREAD_STACK_SIZE 1024   // Stack size for each thread
-#define THREAD_PRIORITY 5        // Priority for threads
+#define THREAD_STACK_SIZE 1024
+#define THREAD_PRIORITY 5
 
-
-
-// Shared resources
 static int sock;
 static struct sockaddr_in6 server_addr;
 
-// Semaphores
-K_SEM_DEFINE(socket_sem, 1, 1); // Semaphore for socket access
+K_SEM_DEFINE(send_sem, 1, 1);
+K_SEM_DEFINE(recv_sem, 1, 1);
 
-// Thread stacks and thread objects
 K_THREAD_STACK_DEFINE(send_stack, THREAD_STACK_SIZE);
 K_THREAD_STACK_DEFINE(receive_stack, THREAD_STACK_SIZE);
 struct k_thread send_thread_data;
@@ -49,29 +46,43 @@ static int set_tx_power(struct net_if *iface, int16_t dbm)
     printk("TX power set to %d dBm\n", dbm);
     return 0;
 }
+
 static int initialize_socket(struct sockaddr_in6 *server_addr)
 {
     int s;
+    int flags;
 
-    // Configure the server address
     memset(server_addr, 0, sizeof(struct sockaddr_in6));
     server_addr->sin6_family = AF_INET6;
     server_addr->sin6_port = htons(SERVER_PORT);
 
-    /* CONFIG_NET_CONFIG_PEER_IPV6_ADDR se expande a cadena si está en prj.conf */
-    if (inet_pton(AF_INET6, CONFIG_NET_CONFIG_PEER_IPV6_ADDR, &server_addr->sin6_addr) != 1) {
-        printk("Invalid IPv6 address format (CONFIG_NET_CONFIG_PEER_IPV6_ADDR)\n");
+    if (inet_pton(AF_INET6, CONFIG_NET_CONFIG_PEER_IPV6_ADDR, 
+                  &server_addr->sin6_addr) != 1) {
+        printk("Invalid IPv6 address format\n");
         return -1;
     }
 
-    // Create a socket
     s = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
     if (s < 0) {
         printk("Failed to create socket: %d\n", errno);
         return -1;
     }
-    printk("Socket created successfully (fd=%d)\n", s);
 
+    // Hacer el socket non-blocking
+    flags = fcntl(s, F_GETFL, 0);
+    if (flags < 0) {
+        printk("Failed to get socket flags: %d\n", errno);
+        close(s);
+        return -1;
+    }
+    
+    if (fcntl(s, F_SETFL, flags | O_NONBLOCK) < 0) {
+        printk("Failed to set non-blocking: %d\n", errno);
+        close(s);
+        return -1;
+    }
+
+    printk("Socket created successfully (fd=%d, non-blocking)\n", s);
     return s;
 }
 
@@ -80,22 +91,25 @@ void send_message(void *arg1, void *arg2, void *arg3)
     ssize_t sent;
 
     while (1) {
-        // Take semaphore to gain exclusive access to the socket
-        k_sem_take(&socket_sem, K_FOREVER);
-
-        sent = sendto(sock, MESSAGE, strlen(MESSAGE), 0,
-                      (struct sockaddr *)&server_addr, sizeof(struct sockaddr_in6));
-        if (sent < 0) {
-            printk("Failed to send message: ret=%zd errno=%d (%s)\n",
-                   sent, errno, strerror(errno));
-        } else {
-            printk("Message sent successfully (ret=%zd): %s\n", sent, MESSAGE);
+        if (k_sem_take(&send_sem, K_NO_WAIT) != 0) {
+            k_sleep(K_MSEC(10));
+            continue;
         }
 
-        // Release the semaphore
-        k_sem_give(&socket_sem);
+        sent = sendto(sock, MESSAGE, strlen(MESSAGE), 0,
+                      (struct sockaddr *)&server_addr, 
+                      sizeof(struct sockaddr_in6));
+        
+        if (sent < 0) {
+            if (errno != EAGAIN && errno != EWOULDBLOCK) {
+                printk("Send failed: errno=%d (%s)\n", errno, strerror(errno));
+            }
+        } else {
+            printk("Sent %zd bytes: %s\n", sent, MESSAGE);
+        }
 
-        k_sleep(K_MSEC(SLEEP_TIME_MS)); // Sleep before sending the next message
+        k_sem_give(&send_sem);
+        k_sleep(K_MSEC(SLEEP_TIME_MS));
     }
 }
 
@@ -103,29 +117,33 @@ void receive_message(void *arg1, void *arg2, void *arg3)
 {
     char recv_buffer[BUFFER_SIZE];
     ssize_t received;
-    struct sockaddr_in6 client_addr;
-    socklen_t client_addr_len = sizeof(client_addr);
+    struct sockaddr_in6 from_addr;
+    socklen_t from_addr_len;
 
     while (1) {
-        // Take semaphore to gain exclusive access to the socket
-        k_sem_take(&socket_sem, K_FOREVER);
-
-        memset(recv_buffer, 0, BUFFER_SIZE);
-        received = recvfrom(sock, recv_buffer, BUFFER_SIZE - 1, 0,
-                            (struct sockaddr *)&client_addr, &client_addr_len);
-        if (received < 0) {
-            printk("Failed to receive data: ret=%zd errno=%d (%s)\n",
-                   received, errno, strerror(errno));
-        } else {
-            // Null-terminate the received data for printing
-            recv_buffer[received] = '\0';
-            printk("Received %zd bytes from client: %s\n", received, recv_buffer);
+        if (k_sem_take(&recv_sem, K_NO_WAIT) != 0) {
+            k_sleep(K_MSEC(10));
+            continue;
         }
 
-        // Release the semaphore
-        k_sem_give(&socket_sem);
+        memset(recv_buffer, 0, BUFFER_SIZE);
+        from_addr_len = sizeof(from_addr);
+        
+        received = recvfrom(sock, recv_buffer, BUFFER_SIZE - 1, 0,
+                           (struct sockaddr *)&from_addr, &from_addr_len);
+        
+        if (received < 0) {
+            if (errno != EAGAIN && errno != EWOULDBLOCK) {
+                printk("Recv failed: errno=%d (%s)\n", errno, strerror(errno));
+            }
+            // EAGAIN/EWOULDBLOCK es normal, significa "no hay datos"
+        } else if (received > 0) {
+            recv_buffer[received] = '\0';
+            printk("Received %zd bytes: %s\n", received, recv_buffer);
+        }
 
-        k_sleep(K_MSEC(SLEEP_TIME_MS)); // Sleep before checking for the next message
+        k_sem_give(&recv_sem);
+        k_sleep(K_MSEC(50));  // Poll cada 50ms
     }
 }
 
@@ -139,34 +157,25 @@ void main(void)
         return;
     }
 
-    /* Si tienes CONFIG_NET_CONFIG_SETTINGS y no AUTO_INIT, subir la interfaz ayuda */
     net_if_up(iface);
-    set_tx_power(iface,20);
-    /* espera corta para que la pila procese el 'if up' y net_config asigne dir. */
     k_sleep(K_MSEC(1500));
-    //try_set_tx_power_netmgmt(20);
+    
+    set_tx_power(iface, 20);
 
- 
-    // Initialize socket
     sock = initialize_socket(&server_addr);
     if (sock < 0) {
         return;
     }
 
-    // Create the sending thread
     k_thread_create(&send_thread_data, send_stack, THREAD_STACK_SIZE,
-                    (k_thread_entry_t)send_message, NULL, NULL, NULL,
+                    send_message, NULL, NULL, NULL,
                     THREAD_PRIORITY, 0, K_NO_WAIT);
 
-    // Create the receiving thread
     k_thread_create(&receive_thread_data, receive_stack, THREAD_STACK_SIZE,
-                    (k_thread_entry_t)receive_message, NULL, NULL, NULL,
+                    receive_message, NULL, NULL, NULL,
                     THREAD_PRIORITY, 0, K_NO_WAIT);
 
     while (1) {
-        k_sleep(K_FOREVER); // Keep the main thread idle
+        k_sleep(K_FOREVER);
     }
-
-    /* unreachable */
-    // close(sock);
 }
