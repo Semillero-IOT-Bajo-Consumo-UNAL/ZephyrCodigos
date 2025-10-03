@@ -6,57 +6,53 @@
 #include <zephyr/net/net_mgmt.h>
 #include <zephyr/net/ieee802154_mgmt.h>
 #include <zephyr/drivers/gpio.h>
+#include <string.h>
+#include <errno.h>
 
-#define SERVER_PORT 12345         // Server listening port
-#define BUFFER_SIZE 128           // Buffer size for incoming messages
+#define SERVER_PORT 12345
+#define BUFFER_SIZE 128
 #define RESPONSE_MESSAGE "Hello from server!"
+#define THREAD_STACK_SIZE 1024
+#define THREAD_PRIORITY 5
 
-#define THREAD_STACK_SIZE 1024    // Stack size for threads
-#define THREAD_PRIORITY 5         // Priority for threads
-
-
-
-
-static struct k_sem sync_sem;     // Semaphore for synchronizing receive and transmit
-static char recv_buffer[BUFFER_SIZE]; // Buffer to store received messages
-static struct sockaddr_in6 client_addr; // Client address
+static struct k_sem sync_sem;
+static char recv_buffer[BUFFER_SIZE];
+static struct sockaddr_in6 client_addr;
 static socklen_t client_addr_len;
-static int server_sock;          // Server socket
+static int server_sock;
 
-#define PA_PIN     29
-#define SUBG_PIN   30
-static const struct gpio_dt_spec pa_gpio = GPIO_DT_SPEC_GET_OR(DT_NODELABEL(antenna_mux0), gpios, {0});
-void enable_pa(const struct device *gpio)
+static int set_tx_power(struct net_if *iface, int16_t dbm)
 {
-    /* PA = DIO29 = 1, SUBG = DIO30 = 0 -> 20 dBm TX según tu tabla */
-    gpio_pin_set(gpio, PA_PIN, 1);
-    gpio_pin_set(gpio, SUBG_PIN, 0);
+    struct {
+        int16_t dbm;
+    } tx_power = {
+        .dbm = dbm
+    };
+    
+    int ret = net_mgmt(NET_REQUEST_IEEE802154_SET_TX_POWER,
+                       iface, &tx_power, sizeof(tx_power));
+    if (ret) {
+        printk("Failed to set TX power to %d dBm: %d\n", dbm, ret);
+        return ret;
+    }
+
+    printk("TX power set to %d dBm\n", dbm);
+    return 0;
 }
 
-void disable_pa(const struct device *gpio)
-{
-    /* Volver al estado "off" */
-    gpio_pin_set(gpio, PA_PIN, 0);
-    gpio_pin_set(gpio, SUBG_PIN, 0);
-}
-
-// Thread stack and thread definitions
 K_THREAD_STACK_DEFINE(receive_stack, THREAD_STACK_SIZE);
 K_THREAD_STACK_DEFINE(transmit_stack, THREAD_STACK_SIZE);
-K_THREAD_STACK_DEFINE(msg_stack, THREAD_STACK_SIZE);
 struct k_thread receive_thread_data;
 struct k_thread transmit_thread_data;
-struct k_thread msg_data;
 
-
-void receive_thread(void *arg1, void *arg2, void *arg3) {
+void receive_thread(void *arg1, void *arg2, void *arg3)
+{
     ssize_t received;
 
     while (1) {
         memset(recv_buffer, 0, BUFFER_SIZE);
         client_addr_len = sizeof(client_addr);
 
-        // Wait for data from a client
         received = recvfrom(server_sock, recv_buffer, BUFFER_SIZE - 1, 0,
                             (struct sockaddr *)&client_addr, &client_addr_len);
         if (received < 0) {
@@ -64,24 +60,20 @@ void receive_thread(void *arg1, void *arg2, void *arg3) {
             continue;
         }
 
-        // Null-terminate the received data for printing
         recv_buffer[received] = '\0';
         printk("Received %zd bytes from client: %s\n", received, recv_buffer);
 
-        // Signal the transmit thread to send a response
         k_sem_give(&sync_sem);
     }
 }
 
-
-void transmit_thread(void *arg1, void *arg2, void *arg3) {
+void transmit_thread(void *arg1, void *arg2, void *arg3)
+{
     ssize_t sent;
 
     while (1) {
-        // Wait for the semaphore to be given by the receive thread
         k_sem_take(&sync_sem, K_FOREVER);
 
-        // Respond to the client
         sent = sendto(server_sock, RESPONSE_MESSAGE, strlen(RESPONSE_MESSAGE), 0,
                       (struct sockaddr *)&client_addr, client_addr_len);
         if (sent < 0) {
@@ -90,15 +82,32 @@ void transmit_thread(void *arg1, void *arg2, void *arg3) {
             printk("Response sent to client\n");
         }
 
-        // Add a small delay to avoid flooding the network
         k_sleep(K_MSEC(100));
     }
 }
 
-void main(void) {
+void main(void)
+{
     struct sockaddr_in6 server_addr;
+    struct net_if *iface;
 
     printk("Starting UDP server with semaphore synchronization\n");
+
+    // Obtener la interfaz de red y configurar potencia PRIMERO
+    iface = net_if_get_default();
+    if (!iface) {
+        printk("No default net interface\n");
+        return;
+    }
+
+    // Subir la interfaz
+    net_if_up(iface);
+    
+    // Esperar a que la interfaz esté lista
+    k_sleep(K_MSEC(1500));
+    
+    // Establecer potencia a 20 dBm
+    set_tx_power(iface, 20);
 
     // Initialize semaphore
     k_sem_init(&sync_sem, 0, 1);
@@ -110,24 +119,12 @@ void main(void) {
         return;
     }
     printk("Socket created successfully\n");
-    printk("AF_INET6 = %d\n", AF_INET6);
-    printk("SOCK_DGRAM = %d\n", SOCK_DGRAM);
-    printk("IPPROTO_UDP = %d\n", IPPROTO_UDP);
-    
 
     // Configure the server address
     memset(&server_addr, 0, sizeof(server_addr));
     server_addr.sin6_family = AF_INET6;
     server_addr.sin6_port = htons(SERVER_PORT);
     server_addr.sin6_addr = in6addr_any;
-
-    if (!device_is_ready(pa_gpio.port)) {
-    printk("PA GPIO device not ready\n");
-    return;
-    }
-
-    gpio_pin_configure_dt(&pa_gpio, GPIO_OUTPUT_INACTIVE);
-    gpio_pin_set_dt(&pa_gpio, 1);
 
     // Bind the socket to the server address and port
     if (bind(server_sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
@@ -146,4 +143,8 @@ void main(void) {
     k_thread_create(&transmit_thread_data, transmit_stack, THREAD_STACK_SIZE,
                     transmit_thread, NULL, NULL, NULL,
                     THREAD_PRIORITY, 0, K_NO_WAIT);
+
+    while (1) {
+        k_sleep(K_FOREVER);
+    }
 }

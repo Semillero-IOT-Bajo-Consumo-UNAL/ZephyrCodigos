@@ -15,7 +15,7 @@ static char recv_buffer[BUFFER_SIZE]; // Buffer to store received messages
 static struct sockaddr_in6 client_addr; // Client address
 static socklen_t client_addr_len;
 static int server_sock;          // Server socket
-
+const struct device *radio = DEVICE_DT_GET(DT_NODELABEL(cc13xx_cc26xx_ieee802154));
 // Thread stack and thread definitions
 K_THREAD_STACK_DEFINE(receive_stack, THREAD_STACK_SIZE);
 K_THREAD_STACK_DEFINE(transmit_stack, THREAD_STACK_SIZE);

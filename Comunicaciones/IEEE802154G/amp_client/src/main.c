@@ -31,25 +31,24 @@ K_THREAD_STACK_DEFINE(receive_stack, THREAD_STACK_SIZE);
 struct k_thread send_thread_data;
 struct k_thread receive_thread_data;
 
-
-#define PA_PIN     29
-#define SUBG_PIN   30
-static const struct gpio_dt_spec pa_gpio = GPIO_DT_SPEC_GET_OR(DT_NODELABEL(antenna_mux0), gpios, {0});
-void enable_pa(const struct device *gpio)
+static int set_tx_power(struct net_if *iface, int16_t dbm)
 {
-    /* PA = DIO29 = 1, SUBG = DIO30 = 0 -> 20 dBm TX según tu tabla */
-    gpio_pin_set(gpio, PA_PIN, 1);
-    gpio_pin_set(gpio, SUBG_PIN, 0);
+    struct {
+        int16_t dbm;
+    } tx_power = {
+        .dbm = dbm
+    };
+    
+    int ret = net_mgmt(NET_REQUEST_IEEE802154_SET_TX_POWER,
+                       iface, &tx_power, sizeof(tx_power));
+    if (ret) {
+        printk("Failed to set TX power to %d dBm: %d\n", dbm, ret);
+        return ret;
+    }
+
+    printk("TX power set to %d dBm\n", dbm);
+    return 0;
 }
-
-void disable_pa(const struct device *gpio)
-{
-    /* Volver al estado "off" */
-    gpio_pin_set(gpio, PA_PIN, 0);
-    gpio_pin_set(gpio, SUBG_PIN, 0);
-}
-
-
 static int initialize_socket(struct sockaddr_in6 *server_addr)
 {
     int s;
@@ -142,19 +141,12 @@ void main(void)
 
     /* Si tienes CONFIG_NET_CONFIG_SETTINGS y no AUTO_INIT, subir la interfaz ayuda */
     net_if_up(iface);
-
+    set_tx_power(iface,20);
     /* espera corta para que la pila procese el 'if up' y net_config asigne dir. */
     k_sleep(K_MSEC(1500));
     //try_set_tx_power_netmgmt(20);
 
-    if (!device_is_ready(pa_gpio.port)) {
-    printk("PA GPIO device not ready\n");
-    return;
-    }
-
-    gpio_pin_configure_dt(&pa_gpio, GPIO_OUTPUT_INACTIVE);
-    gpio_pin_set_dt(&pa_gpio, 1);
-
+ 
     // Initialize socket
     sock = initialize_socket(&server_addr);
     if (sock < 0) {
