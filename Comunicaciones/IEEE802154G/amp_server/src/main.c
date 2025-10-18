@@ -12,7 +12,7 @@
 
 #define SERVER_PORT 12345
 #define BUFFER_SIZE 128
-#define RESPONSE_MESSAGE "Hello from server!"
+#define RESPONSE_MESSAGE "Y el corazon tucun tucun tucun"
 #define THREAD_STACK_SIZE 1024
 #define THREAD_PRIORITY 5
 
