@@ -268,7 +268,7 @@ void IEEEG_sendMessage(char* mensaje, char* ip)
     }
 }
 
-/* Para parar/limpiar el servidor */
+/* Para parar el servidor */
 void IEEEG_Stop(void)
 {
     if (sock_fd >= 0) {
