@@ -159,19 +159,31 @@ void receive_message(void *arg1, void *arg2, void *arg3)
 /* API pública: inicia servidor UDP en ipv6.
  * Si ip == NULL o ip == "" bindea a :: (ANY). Si ip es no-nula y válida, bindea a esa IP.
  */
-int IEEEG_StartComunications(const char* ip, int port)
+/* Asegúrate de tener estas includes (ya tenías algunas):
+ * #include <zephyr/kernel.h>
+ * #include <zephyr/net/socket.h>
+ * #include <stdio.h>
+ * #include <string.h>
+ * #include <errno.h>
+ */
+
+int IEEEG_StartComunications(int port)
 {
+    /* Si hay una dirección por Kconfig, la usamos como valor por defecto */
+    #ifdef CONFIG_NET_CONFIG_MY_IPV6_ADDR
+        const char *ip = CONFIG_NET_CONFIG_MY_IPV6_ADDR;
+    #else
+        const char *ip = NULL;
+        printf("Papacho tienes que configurar una IP con CONFIG_NET_CONFIG_MY_IPV6_ADDR\n")
+        return 1
+    #endif
+
     printk("Iniciando socket IPv6 en puerto %d (ip: %s)\n", port, (ip ? ip : "(null)"));
 
-    /* Opcional: configurar interfaz / radio antes de crear socket */
     struct net_if* iface = IEEEG_getIFace();
     (void) iface;
 
-    /* Crear socket y bindear.
-     * Si pasan IP específica, intentamos bindear a ella; sino a in6addr_any.
-     */
     if (ip && ip[0] != '\0') {
-        /* bind a IP específica */
         struct sockaddr_in6 local = {0};
         local.sin6_family = AF_INET6;
         local.sin6_port = htons(port);
@@ -179,7 +191,6 @@ int IEEEG_StartComunications(const char* ip, int port)
             printk("IEEG_StartServer: IPv6 inválida: %s. Se usará in6addr_any\n", ip);
             sock_fd = initialize_socket_and_bind(port);
         } else {
-            /* Crear socket y bindear a IP concreta */
             sock_fd = zsock_socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
             if (sock_fd < 0) {
                 printk("Failed to create socket: %d\n", errno);
@@ -193,7 +204,6 @@ int IEEEG_StartComunications(const char* ip, int port)
             }
         }
     } else {
-        /* bind a any */
         sock_fd = initialize_socket_and_bind(port);
     }
 
@@ -201,10 +211,8 @@ int IEEEG_StartComunications(const char* ip, int port)
         return -1;
     }
 
-    /* Guardar puerto para sendMessage por defecto (API simple) */
     server_port = (uint16_t)port;
 
-    /* Crear hilo receptor */
     k_thread_create(&receive_thread_data, receive_stack, THREAD_STACK_SIZE,
                     receive_message, NULL, NULL, NULL,
                     THREAD_PRIORITY, 0, K_NO_WAIT);
@@ -212,6 +220,7 @@ int IEEEG_StartComunications(const char* ip, int port)
     printk("Servidor UDP IPv6 iniciado (fd=%d, port=%d)\n", sock_fd, server_port);
     return 0;
 }
+
 
 /* Vincular callback para recibir mensajes */
 int IEEEG_bindOnMessageEvent(void (*f)(ssize_t received,char message[])){
